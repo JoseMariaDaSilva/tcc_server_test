@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from models.motor_model import MotorModel
 import sqlite3
 
@@ -53,7 +53,7 @@ class MotorRegister(Resource):
     def post(self):
         data = self.parse.parse_args()
         print(data['tag'])
-        connection = sqlite3.connect('motor.db')
+        connection = sqlite3.connect('C:/Users/ZZZZZZ/Desktop/motor.db')
         cursor = connection.cursor()
         print(data['tag'])
         if MotorModel.find_by_tag(data['tag']):
@@ -68,12 +68,22 @@ class MotorRegister(Resource):
 class MotorsList(Resource):
 
     def get(self):
-        connection = sqlite3.connect('motor.db')
+        connection = sqlite3.connect('C:/Users/ZZZZZZ/Desktop/motor.db')
         cursor = connection.cursor()
         query = "SELECT * FROM motor"
         result = cursor.execute(query)
         row = result.fetchall()
         connection.close()
         return {"motors":row}
+
+    
+class MotorManager(Resource):
+
+    def delete(self, name):
+        motor = MotorModel.find_by_tag(name)
+        if motor:
+            motor.delete_from_db()
+
+        return {"message":"motor deletado"}
 
         
