@@ -53,7 +53,7 @@ class MotorRegister(Resource):
     def post(self):
         data = self.parse.parse_args()
         print(data['tag'])
-        connection = sqlite3.connect('C:/Users/ZZZZZZ/Desktop/motor.db')
+        connection = sqlite3.connect('motor.db')
         cursor = connection.cursor()
         print(data['tag'])
         if MotorModel.find_by_tag(data['tag']):
@@ -68,7 +68,7 @@ class MotorRegister(Resource):
 class MotorsList(Resource):
 
     def get(self):
-        connection = sqlite3.connect('C:/Users/ZZZZZZ/Desktop/motor.db')
+        connection = sqlite3.connect('motor.db')
         cursor = connection.cursor()
         query = "SELECT * FROM motor"
         result = cursor.execute(query)
