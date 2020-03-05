@@ -164,7 +164,7 @@ class ADS1256:
         else:
             print("ID Read failed   ")
             return -1
-        self.ADS1256_ConfigADC(ADS1256_GAIN_E['ADS1256_GAIN_1'], ADS1256_DRATE_E['ADS1256_7500SPS'])
+        self.ADS1256_ConfigADC(ADS1256_GAIN_E['ADS1256_GAIN_1'], ADS1256_DRATE_E['ADS1256_15000SPS'])
         return 0
         
     def ADS1256_Read_ADC_Data(self):
