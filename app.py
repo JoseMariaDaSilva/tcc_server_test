@@ -16,7 +16,6 @@ api.add_resource(MotorRegister,'/register')
 api.add_resource(MotorsList,'/list')
 api.add_resource(MotorManager,'/motor/<string:name>')
 api.add_resource(Capture,'/capture/<string:name>')
-api.add_resource(Capture,'/capture')
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)

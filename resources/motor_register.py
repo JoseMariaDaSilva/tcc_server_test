@@ -1,7 +1,7 @@
 from flask_restful import Resource, reqparse
 from flask import Flask, request, jsonify
 from models.motor_model import MotorModel
-from high_ad.main import run
+from .runner import run
 import RPi.GPIO as GPIO
 import threading
 
@@ -93,16 +93,20 @@ class MotorManager(Resource):
 class Capture(Resource):
     t = threading.Thread(target=run)
 
-    def post(self,name):
-        self.t.start()
-        return {"message":"Leitura de dados: {}".format(name)}
+    def get(self,name):
+        if name == 'off':
+            self.t.do_run = False
+            self.t.join()
+            with open('data.txt','r') as d:
+                data = d.read()
+            return {"message":data.split('\n')}
 
-    def get(self):
-        self.t.do_run = False
-        self.t.join()
-        with open('data.txt','r') as d:
-            data = d.read()
-        return {"message":data.split('\n')}
+    def post(self,name):
+        if name == 'on':
+            self.t.start()
+            return {"message":"Leitura de dados: {}".format(name)}
+
+    
 
 
     
