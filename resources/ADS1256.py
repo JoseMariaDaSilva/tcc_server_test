@@ -72,7 +72,7 @@ class ADS1256:
         self.rst_pin = config.RST_PIN
         self.cs_pin = config.CS_PIN
         self.drdy_pin = config.DRDY_PIN
-        #self.timer = []
+
     # Hardware reset
     def ADS1256_reset(self):
         config.digital_write(self.rst_pin, GPIO.HIGH)
@@ -94,17 +94,15 @@ class ADS1256:
     def ADS1256_Read_data(self, reg):
         config.digital_write(self.cs_pin, GPIO.LOW)#cs  0
         config.spi_writebyte([CMD['CMD_RREG'] | reg, 0x00])
-        #config.delay_ms(1)
         data = config.spi_readbytes(1)
         config.digital_write(self.cs_pin, GPIO.HIGH)#cs 1
         
         return data
         
     def ADS1256_WaitDRDY(self):
-        #t1 = datetime.now()
+        
         for i in range(0,400000,1):
             if(config.digital_read(self.drdy_pin) == 0):
-                #self.timer.append(datetime.now()-t1)
                 
                 break
         if(i >= 400000):
